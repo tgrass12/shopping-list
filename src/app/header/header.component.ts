@@ -1,4 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Response } from '@angular/http';
+import { DataStorageService } from '../shared/data-storage.service';
+import { AuthService } from '../auth/auth.service';
+import { RecipeService } from '../recipes/recipe.service';
+import { Observable } from 'rxjs/Observable';
+import { Recipe } from '../recipes/recipe.model';
 
 @Component({
   selector: 'app-header',
@@ -6,20 +12,28 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  @Output() navigateView = new EventEmitter<boolean>(); 
 
-  onNavigate(view: string) {
-  	if (view === 'recipes')
-  	{
-  		this.navigateView.emit(true);
-  	} else {
-  		this.navigateView.emit(false);
-  	}
-  }
-
-  constructor() { }
+  constructor(private dataStorageService: DataStorageService,
+  			      private recipeService: RecipeService,
+              private auth: AuthService) { }
 
   ngOnInit() {
   }
 
+  saveData() {
+  	this.dataStorageService.storeRecipes()
+  	  .subscribe(
+  		(response: Response) => {
+  		  console.log(response);
+  		}
+  	  );
+  }
+
+  logOut() {
+    this.auth.logout();
+  }
+
+  getData() {
+  	this.dataStorageService.getRecipes();
+  }
 }

@@ -11,20 +11,7 @@ export class RecipeService {
 
 	constructor(private shoppingListService: ShoppingListService) {}
 
-	private recipes: Recipe[] = [
-		new Recipe('Test Recipe',
-		 'Just a test!',
-		 'https://static01.nyt.com/images/2015/08/14/dining/14ROASTEDSALMON/14ROASTEDSALMON-superJumbo.jpg',
-		 [
-		 	new Ingredient('Meat', 1),
-		 	new Ingredient('Seasoning', 10)]),
-		new Recipe('Test Recipe',
-		 'Just a test!',
-		 'https://static01.nyt.com/images/2015/08/14/dining/14ROASTEDSALMON/14ROASTEDSALMON-superJumbo.jpg',
-		 [
-		 	new Ingredient('Meat', 1),
-		 	new Ingredient('Seasoning', 10)])
-		];
+	private recipes: Recipe[] = [];
 
 	getRecipes() {
 		return this.recipes.slice();
@@ -40,6 +27,11 @@ export class RecipeService {
 
 	addRecipe(recipe: Recipe) {
 		this.recipes.push(recipe);
+		this.recipesChanged.next(this.recipes.slice());
+	}
+
+	setRecipes(recipes: Recipe[]){
+		this.recipes = recipes;
 		this.recipesChanged.next(this.recipes.slice());
 	}
 
