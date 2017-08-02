@@ -11,7 +11,21 @@ export class RecipeService {
 
 	constructor(private shoppingListService: ShoppingListService) {}
 
-	private recipes: Recipe[] = [];
+	private recipes: Recipe[] = [
+	 {name: 'Sample Recipe',
+	 imagePath: 'https://static.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg',
+	 description: 'A preview of a recipe!',
+	 ingredients: [
+	  {name: 'Dough',
+	   amount: 1
+	  },
+	  {name: 'Sauce',
+	   amount: 5
+	  },
+	  {name: 'Cheese',
+	   amount: 10
+	  }]
+	}];
 
 	getRecipes() {
 		return this.recipes.slice();
